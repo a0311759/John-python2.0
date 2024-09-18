@@ -1,6 +1,7 @@
-import streamlit as st
 import subprocess
 import sys
+import os
+import streamlit as st
 import re
 
 # Keywords, operators, numbers, strings, comments for syntax highlighting
@@ -35,6 +36,35 @@ def colorize_code(code):
         code = re.sub(r'\b{}\b'.format(kw), f'<span style="color: #ff6347;">{kw}</span>', code)
     
     return code
+
+# Function to generate the requirements.txt file
+def generate_requirements():
+    try:
+        # Freeze the current environment's installed packages and save to requirements.txt
+        with open('requirements.txt', 'w') as f:
+            subprocess.check_call([sys.executable, "-m", "pip", "freeze"], stdout=f)
+        st.success("requirements.txt has been created.")
+    except Exception as e:
+        st.error(f"Failed to generate requirements.txt: {e}")
+
+# Function to install packages from requirements.txt
+def install_requirements():
+    try:
+        if os.path.exists('requirements.txt'):
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+            st.success("Packages installed successfully.")
+        else:
+            st.error("requirements.txt does not exist. Generating it now.")
+            generate_requirements()
+    except Exception as e:
+        st.error(f"Failed to install requirements.txt: {e}")
+
+# Check if requirements.txt exists, if not, generate it
+if not os.path.exists('requirements.txt'):
+    generate_requirements()
+else:
+    # Try installing packages from requirements.txt
+    install_requirements()
 
 # Streamlit UI
 st.title("Python Online Compiler with Syntax Highlighting")
