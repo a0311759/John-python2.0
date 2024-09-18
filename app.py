@@ -27,8 +27,16 @@ def run_code(filename="temp_code.py"):
 st.title("Python Online Interpreter")
 st.write("Enter your Python code below and click 'Run Code' to execute it.")
 
-# Text area for user input
-user_code = st.text_area("Python Code", height=250)
+# Default sample code for users
+sample_code = """import math
+
+# Calculate the square root of 16
+result = math.sqrt(16)
+print("The square root of 16 is:", result)
+"""
+
+# Text area for user input (with pre-filled sample code)
+user_code = st.text_area("Python Code", sample_code, height=250)
 
 # Execute code
 if st.button("Run Code"):
@@ -45,15 +53,4 @@ if st.button("Run Code"):
             st.error("Failed to write code to file.")
     else:
         st.warning("Please enter some Python code to run.")
-
-# Display a simple example
-st.markdown("""
-### Example Usage:
-Here's a small example that uses the `math` module:
-
-```python
-import math
-
-# Calculate the square root of 16
-result = math.sqrt(16)
-print("The square root of 16 is:", result)
+        
