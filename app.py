@@ -3,7 +3,7 @@ import subprocess
 import sys
 import re
 
-# Keywords, Operators, Numbers, Strings, Comments for syntax highlighting
+# Keywords, operators, numbers, strings, comments for syntax highlighting
 KEYWORDS = [
     'False', 'await', 'else', 'import', 'pass', 'None', 'break', 'except', 'in', 
     'raise', 'True', 'class', 'finally', 'is', 'return', 'and', 'continue', 'for', 
@@ -37,7 +37,7 @@ def colorize_code(code):
     return code
 
 # Streamlit UI
-st.title("Python Online Compiler")
+st.title("Python Online Compiler with Syntax Highlighting")
 st.write("Enter your Python code below:")
 
 # Text area for user input
