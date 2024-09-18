@@ -41,46 +41,30 @@ st.title("Python Online Interpreter with Plotting Support")
 st.write("Enter your Python code below and click 'Run Code' to execute it.")
 
 # Default sample code for users
-sample_code = """import streamlit as st
+sample_code = """
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import io
 
-# Function to display matplotlib/seaborn plots
-def display_plot():
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    st.image(buf)
-    buf.close()
-    plt.close()
-
-# Streamlit UI
-st.title("Seaborn Plots in Streamlit")
-
-# Bar Plot
-st.subheader("Bar Plot")
+# Sample data for the bar plot
 data = pd.DataFrame({
     'Fruits': ['Apples', 'Bananas', 'Cherries', 'Dates'],
     'Quantities': [30, 20, 25, 15]
 })
+
+# Create a bar plot
 plt.figure(figsize=(8, 5))
 sns.barplot(x='Fruits', y='Quantities', data=data, palette='viridis')
+
+# Add titles and labels
 plt.title('Fruit Quantities')
 plt.xlabel('Fruits')
 plt.ylabel('Quantities')
-display_plot()
 
-# Box Plot
-st.subheader("Box Plot")
-tips = sns.load_dataset('tips')
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='day', y='total_bill', data=tips, palette='coolwarm')
-plt.title('Total Bill Distribution by Day')
-plt.xlabel('Day')
-plt.ylabel('Total Bill')
-display_plot()
+# Show the plot
+plt.show()
+
+
 
 """
 
