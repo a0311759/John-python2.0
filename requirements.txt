@@ -1,0 +1,101 @@
+# Data Science & Machine Learning
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+scipy
+statsmodels
+plotly
+tensorflow
+torch
+xgboost
+catboost
+lightgbm
+nltk
+spacy
+gensim
+keras
+pillow
+opencv-python
+pycaret
+
+# Finance & Economics
+yfinance
+pandas-datareader
+QuantLib
+TA-Lib
+ccxt
+alpaca-trade-api
+pyfolio
+
+# Web Development
+flask
+django
+fastapi
+dash
+streamlit
+requests
+beautifulsoup4
+scrapy
+httpx
+flask-restful
+aiohttp
+websockets
+
+# Game Development & Physics Engines
+pygame
+pyglet
+pymunk
+panda3d
+arcade
+ursina
+pybullet
+sympy
+
+# User Interface (UI) Libraries
+tkinter
+PyQt5
+PySide2
+Kivy
+dearpygui
+PySimpleGUI
+plotly-dash
+
+# Natural Language Processing (NLP)
+nltk
+spacy
+transformers
+flair
+sentence-transformers
+textblob
+
+# Deep Learning & Computer Vision
+tensorflow
+keras
+torch
+opencv-python
+dlib
+albumentations
+detectron2
+mmcv
+
+# API Interaction & Web Scraping
+requests
+beautifulsoup4
+scrapy
+selenium
+httpx
+flask
+dash
+
+# Miscellaneous Tools
+pydantic
+PyYAML
+loguru
+pytest
+JupyterLab
+ipywidgets
+nbconvert
+sqlalchemy
+boto3
