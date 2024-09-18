@@ -1,96 +1,59 @@
 import streamlit as st
 import subprocess
 import sys
-import re
+import os
 
-# Keywords, Operators, Numbers, Strings, Comments for syntax highlighting
-KEYWORDS = [
-    'False', 'await', 'else', 'import', 'pass', 'None', 'break', 'except', 'in', 
-    'raise', 'True', 'class', 'finally', 'is', 'return', 'and', 'continue', 'for', 
-    'lambda', 'try', 'as', 'def', 'from', 'nonlocal', 'while', 'assert', 'del', 
-    'global', 'not', 'with', 'async', 'elif', 'if', 'or', 'yield'
-]
-OPERATORS = ['=', '==', '!=', '<', '>', '<=', '>=', '\+', '-', '\*', '/', '//', '\%', '\*\*', '&', '\|', '\^', '~', '<<', '>>']
-COMMENTS_PATTERN = r'#.*'
-STRING_PATTERN = r'(["\'])(?:(?=(\\?))\2.)*?\1'
-NUMBER_PATTERN = r'\b\d+\.?\d*\b'
+# Function to write user code to a temporary file
+def write_code_to_file(code, filename="temp_code.py"):
+    try:
+        with open(filename, "w") as f:
+            f.write(code)
+        return True
+    except Exception as e:
+        st.error(f"Error writing code to file: {e}")
+        return False
 
-# Function to colorize code for different elements
-def colorize_code(code):
-    # Highlight comments
-    code = re.sub(COMMENTS_PATTERN, lambda x: f'<span style="color: #008000;">{x.group(0)}</span>', code)
-
-    # Highlight strings
-    code = re.sub(STRING_PATTERN, lambda x: f'<span style="color: #D2691E;">{x.group(0)}</span>', code)
-
-    # Highlight numbers
-    code = re.sub(NUMBER_PATTERN, lambda x: f'<span style="color: #FF4500;">{x.group(0)}</span>', code)
-
-    # Highlight operators
-    for op in OPERATORS:
-        code = re.sub(r'{}'.format(op), f'<span style="color: #0000FF;">{op}</span>', code)
-
-    # Highlight keywords
-    for kw in KEYWORDS:
-        code = re.sub(r'\b{}\b'.format(kw), f'<span style="color: #ff6347;">{kw}</span>', code)
-    
-    return code
+# Function to run the code and capture output
+def run_code(filename="temp_code.py"):
+    try:
+        result = subprocess.run([sys.executable, filename], capture_output=True, text=True, timeout=10)
+        return result.stdout, result.stderr, result.returncode
+    except subprocess.TimeoutExpired:
+        return "", "Error: Code execution timed out.", 1
+    except Exception as e:
+        return "", f"Error executing code: {e}", 1
 
 # Streamlit UI
 st.title("Python Online Interpreter")
-st.write("Enter your Python code below:")
+st.write("Enter your Python code below and click 'Run Code' to execute it.")
 
 # Text area for user input
-user_code = st.text_area("Python Code", height=250, value="")
+user_code = st.text_area("Python Code", height=250)
 
-# Colorized code preview (Read-only)
-st.markdown("**Your Code**", unsafe_allow_html=True)
-st.markdown(f"<pre>{colorize_code(user_code)}</pre>", unsafe_allow_html=True)
-
-# Compile and Run code using subprocess
+# Execute code
 if st.button("Run Code"):
-    if user_code:
-        try:
-            # Write the user code to a temporary file
-            with open("temp_code.py", "w") as f:
-                f.write(user_code)
-                
-            # Run the code with subprocess
-            result = subprocess.run([sys.executable, "temp_code.py"], capture_output=True, text=True, timeout=5)
-            
-            # Display output or error
-            if result.returncode == 0:
+    if user_code.strip():
+        if write_code_to_file(user_code):
+            output, error, returncode = run_code()
+            if returncode == 0:
                 st.success("Output:")
-                st.code(result.stdout)
+                st.code(output)
             else:
                 st.error("Error:")
-                st.code(result.stderr)
-        except subprocess.TimeoutExpired:
-            st.error("Error: Code execution timed out.")
+                st.code(error)
+        else:
+            st.error("Failed to write code to file.")
     else:
-        st.error("Please enter Python code to run.")
+        st.warning("Please enter some Python code to run.")
 
-# Display a prompt to try out data science code examples
-st.markdown("### Try running this sample code:")
-sample_code = """
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+# Display a simple example
+st.markdown("""
+### Example Usage:
+Here's a small example that uses the `math` module:
 
-# Create a sample DataFrame
-data = {'X': [1, 2, 3, 4, 5], 'Y': [2, 4, 6, 8, 10]}
-df = pd.DataFrame(data)
+```python
+import math
 
-# Print DataFrame
-print("Sample DataFrame:")
-print(df)
-
-# Plotting
-plt.plot(df['X'], df['Y'])
-plt.title('Sample Plot')
-plt.xlabel('X Axis')
-plt.ylabel('Y Axis')
-plt.grid(True)
-plt.show()
-"""
-st.code(sample_code)
+# Calculate the square root of 16
+result = math.sqrt(16)
+print("The square root of 16 is:", result)
