@@ -41,28 +41,47 @@ st.title("Python Online Interpreter with Plotting Support")
 st.write("Enter your Python code below and click 'Run Code' to execute it.")
 
 # Default sample code for users
-sample_code = """import matplotlib.pyplot as plt
+sample_code = """import streamlit as st
 import seaborn as sns
-import numpy as np
-import plotly.express as px
+import matplotlib.pyplot as plt
+import pandas as pd
+import io
 
-# Example matplotlib plot
-plt.figure()
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-plt.plot(x, y)
-plt.title("Matplotlib Example")
+# Function to display matplotlib/seaborn plots
+def display_plot():
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    st.image(buf)
+    buf.close()
+    plt.close()
 
-# Example seaborn plot
-sns.set(style="whitegrid")
-tips = sns.load_dataset("tips")
-sns.boxplot(x="day", y="total_bill", data=tips)
-plt.figure()
+# Streamlit UI
+st.title("Seaborn Plots in Streamlit")
 
-# Example plotly plot
-df = px.data.iris()
-fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", title="Plotly Example")
-fig.show()
+# Bar Plot
+st.subheader("Bar Plot")
+data = pd.DataFrame({
+    'Fruits': ['Apples', 'Bananas', 'Cherries', 'Dates'],
+    'Quantities': [30, 20, 25, 15]
+})
+plt.figure(figsize=(8, 5))
+sns.barplot(x='Fruits', y='Quantities', data=data, palette='viridis')
+plt.title('Fruit Quantities')
+plt.xlabel('Fruits')
+plt.ylabel('Quantities')
+display_plot()
+
+# Box Plot
+st.subheader("Box Plot")
+tips = sns.load_dataset('tips')
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='day', y='total_bill', data=tips, palette='coolwarm')
+plt.title('Total Bill Distribution by Day')
+plt.xlabel('Day')
+plt.ylabel('Total Bill')
+display_plot()
+
 """
 
 # Text area for user input (with pre-filled sample code)
