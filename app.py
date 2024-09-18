@@ -37,16 +37,15 @@ def colorize_code(code):
     return code
 
 # Streamlit UI
-st.title("Python Online Compiler")
+st.title("Python Online Compiler with Syntax Highlighting")
 st.write("Enter your Python code below:")
 
 # Text area for user input
-user_code = st.text_area("Python Code", height=250)
+user_code = st.text_area("Python Code", height=250, value="")
 
-# Colorized code preview
-if user_code:
-    st.markdown("**Preview with Syntax Highlighting**", unsafe_allow_html=True)
-    st.markdown(f"<pre>{colorize_code(user_code)}</pre>", unsafe_allow_html=True)
+# Colorized code preview (Read-only)
+st.markdown("**Code with Syntax Highlighting**", unsafe_allow_html=True)
+st.markdown(f"<pre>{colorize_code(user_code)}</pre>", unsafe_allow_html=True)
 
 # Compile and Run code using subprocess
 if st.button("Run Code"):
