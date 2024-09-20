@@ -37,7 +37,7 @@ def display_matplotlib_plot():
     plt.close()
 
 # Streamlit UI
-st.title("Python Online Interpreter with Plotting Support")
+st.title("Python Online Interpreter")
 st.write("Enter your Python code below and click 'Run Code' to execute it.")
 
 # Default sample code for users
