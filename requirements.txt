@@ -1,6 +1,5 @@
 streamlit
 pandas
-transformers
 numpy
 matplotlib
 seaborn
@@ -14,3 +13,7 @@ xgboost
 jupyter
 ipython
 notebook
+transformers>=4.33.0    # Hugging Face Transformers Library
+torch>=2.0.0            # PyTorch for using Transformers with PyTorch backend
+tf-keras>=0.1.0         # Older version of Keras for TensorFlow compatibility (optional)
+streamlit>=1.24.0       # If you're using Streamlit for the web interface (optional)
