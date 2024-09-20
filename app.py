@@ -20,7 +20,7 @@ def write_code_to_file(code, filename="temp_code.py"):
 # Function to run the code and capture output
 def run_code(filename="temp_code.py"):
     try:
-        result = subprocess.run([sys.executable, filename], capture_output=True, text=True, timeout=10)
+        result = subprocess.run([sys.executable, filename], capture_output=True, text=True, timeout=100)
         return result.stdout, result.stderr, result.returncode
     except subprocess.TimeoutExpired:
         return "", "Error: Code execution timed out.", 1
