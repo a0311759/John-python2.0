@@ -10,8 +10,6 @@ scipy
 statsmodels
 plotly
 yfinance
-youtube-dl
-ffmpeg-python
 tensorflow
 torch
 xgboost
