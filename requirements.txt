@@ -12,6 +12,7 @@ plotly
 yfinance
 tensorflow
 torch
+TTS
 xgboost
 jupyter
 ipython
