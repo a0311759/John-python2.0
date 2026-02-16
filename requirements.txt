@@ -1,4 +1,5 @@
 gensim>=4.0.0
+youtube_dl
 nltk>=3.5
 datasets==2.14.1
 pandas
