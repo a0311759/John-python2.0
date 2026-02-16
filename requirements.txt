@@ -1,5 +1,11 @@
 gensim>=4.0.0
-youtube_dl
+
+
+
+yt-dlp>=2025.1.1
+ffmpeg-python
+requests
+pillow
 nltk>=3.5
 datasets==2.14.1
 pandas
